@@ -2,7 +2,7 @@ import os
 import time
 import glob,subprocess
 from flask import Flask, redirect, render_template, request, send_file
-
+import shutil
 # Configure Application
 app = Flask(__name__)
 
@@ -62,11 +62,11 @@ def decompress():
             global filename
             global ftype
             filename = up_file.filename
-            print(up_file.filename)
             up_file.save(os.path.join(app.config["FILE_UPLOADS"], filename))
-            subprocess.call('a.exe .\\uploads\{}'.format(filename), shell=True)
+            subprocess.call('d.exe .\\uploads\{}'.format(filename), shell=True)
             filename=filename.split(".")[0]
-            ftype="_decompressed.txt"
+            ftype="_decompressed.txt"     
+            shutil.copyfile("_decompressed.txt","./uploads/"+filename+ftype);       
             print("DONE DECOMPRESSION")
             return render_template("decompress.html", check=1)
 
