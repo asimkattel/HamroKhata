@@ -9,7 +9,33 @@ app = Flask(__name__)
 global filename
 global ftype
 
-@app.route("/")
+
+@app.route("/", methods=["GET", "POST"])
+def welcome():
+
+    if request.method == "GET":
+        return render_template("welcome.html", check=0) 
+    
+
+@app.route("/registration", methods=["GET", "POST"])
+def registration():
+
+    if request.method == "GET":
+        return render_template("registration.html", check=0) 
+    if request.method == "POST":
+        return render_template("login.html", check=0) 
+
+    
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "GET":
+        return render_template("login.html", check=0)
+
+
+@app.route("/home")
 def home():
 
     # Delete old files
@@ -22,6 +48,9 @@ def home():
     return render_template("home.html")
 
 app.config["FILE_UPLOADS"] = "./uploads"
+
+
+
 
 @app.route("/compress", methods=["GET", "POST"])
 def compress():
@@ -39,7 +68,7 @@ def compress():
             print(up_file.filename)
             up_file.save(os.path.join(app.config["FILE_UPLOADS"], filename))
             subprocess.call('c uploads\{}'.format(filename), shell=True)
-            filename=filename.split(".")[0]
+            filename=filename.split(".")[0] 
             ftype=".compress"
             print("DONE COMPRESSION")
             return render_template("compress.html", check=1)

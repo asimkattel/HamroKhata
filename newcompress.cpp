@@ -88,8 +88,7 @@ node *buildtree(string str)
     }
     node *root = pq.top();
     encode(root, "", huffman);
-    //for (auto pair : huffman)
-    //    cout << pair.first << " " << pair.second << endl;
+
     string encodedstr = "";
     for (char ch : str)
     {
@@ -185,27 +184,13 @@ int main(int argc, char *argv[])
     ofile.open(tmp + ".compress", ios::out | ios::binary);
     node *root;
     root = buildtree(original);
-    //
-    //pr(root);
-    //
+   
     tmp = "";
     tmp = out_header(root, tmp);
-    /*cout << endl;
-    for (char cc : tmp)
-    {
-        if (cc == '\n')
-            cout << "\\n";
-        else
-        {
-            cout << cc;
-        }
-    }
-    cout << endl;*/
+ 
     tmp = transferchartobit(tmp);
-    //cout << tmp << endl;
-    //header output
+
     int header_length = tmp.size();
-    //cout << "header_length = " << header_length << endl;
     char l[4];
     l[0] = (header_length >> 24) % 256;
     l[1] = (header_length >> 16) % 256;
@@ -229,8 +214,7 @@ int main(int argc, char *argv[])
         ofile.put(c);
     }
     tmp = encode_string(original);
-    //cout << tmp << endl;
-    //file output
+
     int file_length = tmp.size();
     l[0] = (file_length >> 24) % 256;
     l[1] = (file_length >> 16) % 256;

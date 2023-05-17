@@ -37,7 +37,7 @@
             .bton:hover{
                 font-weight:600;
                 cursor:pointer;
-                background:transparent;
+                background:grey;
                 color:white;
                 text-decoration:none;
                 transform: translateY(-8px);
@@ -57,22 +57,16 @@
                 transform: translateY(-8px);
             }
         </style>
-        <!--[if lte IE 6]>
-        <style type="text/css">
-            #container {
-                height: 100%;
-            }
-        </style>
-        <![endif]-->
+
     </head>
 
-    <body style="background-color: black; align-items: center; margin-top:-30px;">
+    <body style="background-color: grey; align-items: center; margin-top:-30px;">
         <div style="color: white; text-align:center;" id="wrapper">
             <h1 style="padding-top:150px; font-size: 44px; font-weight:700;">DECOMPRESS YOUR FILE</h1>
         <form action="/decompress" method="POST" enctype="multipart/form-data">
             <div>
                 <label style="margin-top:20px; margin-bottom:30px; font-weight:lighter; font-size:16px;">Select a huffman tree encoded binary file to decompress it !</label>
-                <input type="file" name="file" id="file" style="font-size:16px; width:170px;margin-left:44%; background:white; color:#a0a0a0;">
+                <input type="file" name="file" id="file" style="font-size:16px; width: 300px;;margin-left:40%; background:white; color:#a0a0a0;">
             </div>
             <button style="margin-top:30px;" class="bton" type="submit">Upload</button><br>
             <label style="margin-top:20px; font-weight:lighter; font-size:16px;">Please wait after uploading so that your file gets decompressed.</label>

@@ -158,7 +158,6 @@ int main(int argc, char *argv[])
     out.open(filename, ios::out);
     pos = -1;
     int prepos = -1;
-    //cout << ffile << endl;
     while (1)
     {
         if (pos > (int)(ffile.size()) - 2)
