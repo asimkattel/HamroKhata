@@ -1,38 +1,94 @@
 import os
 import time
 import glob,subprocess
-from flask import Flask, redirect, render_template, request, send_file
+from flask import Flask, redirect, render_template, request, send_file,flash
 import shutil
 # Configure Application
 app = Flask(__name__)
-
+app.secret_key = "abc1"
 global filename
 global ftype
 
 
+import sqlite3
+
+conn = sqlite3.connect('user_database.db')
+cursor = conn.cursor()
+
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+        email TEXT PRIMARY KEY,
+        password TEXT
+    )
+''')
+
+
+cursor.close()
+conn.close()
+
+
 @app.route("/", methods=["GET", "POST"])
 def welcome():
-
-    if request.method == "GET":
-        return render_template("welcome.html", check=0) 
+    # validation vare
+    return redirect("/login")
     
+
 
 @app.route("/registration", methods=["GET", "POST"])
 def registration():
-
     if request.method == "GET":
-        return render_template("registration.html", check=0) 
+        return render_template("signup.html", check=0) 
+
     if request.method == "POST":
-        return render_template("login.html", check=0) 
+        email = request.form["email"]
+        password = request.form["password"]
+        conn = sqlite3.connect('user_database.db')
+        cursor = conn.cursor()
+
+        cursor=conn.cursor()
+
+        # Check if the email already exists
+        cursor.execute('SELECT * FROM users WHERE email = ?', (email,))
+        if cursor.fetchone():
+            flash("Email already exists. Please choose a different email.")
+            return render_template("signup.html", check=1)  # Return error message
+
+        # Insert the new user into the database
+        cursor.execute('INSERT INTO users VALUES (?, ?)', (email, password))
+        flash("Registration successful! Please log in.")
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect("/login")  # Redirect to login page
+    
 
     
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-
     if request.method == "GET":
         return render_template("login.html", check=0)
+    elif request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = sqlite3.connect('user_database.db')
+        cursor = conn.cursor()
+
+        cursor.execute('SELECT * FROM users WHERE email = ? AND password = ?', (email, password))
+        if cursor.fetchone():
+            cursor.close()
+            conn.close()
+            return redirect("/home")
+        else:
+            cursor.close()
+            conn.close()
+            flash("Invalid email or password.")
+            return redirect("/login")
+
+        
+    
 
 
 @app.route("/home")

@@ -1,4 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+<!-- SignUpHtml -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <script src="signup.js"></script>
+    <title>Sign up Page</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 * {
     box-sizing: border-box;
 }
@@ -185,3 +197,69 @@ body {
     color: #ffffff;
     box-shadow: inset 250px 0 0 0 #2aa15f;
 }
+.flash-messages {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.flash-messages li {
+  background-color: #ffcccc;
+  color: #ff0000;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+</style>
+<body>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for message in messages %}
+        <li >{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <div class="wrapper login">
+        <div class="container">
+            <div class="col-left">
+                <div class="login-text">
+                    <h2>Welcome !<h3>to <strong>File Compression and Decompression</strong></h3></h2>
+                    <br><br><p>Have an Account?<br></p><a href="/login" class="btn">Sign In</a>
+                </div>
+            </div>
+            <div class="col-right">
+                <div class="login-form">
+                    <h2>Create an Account</h2>
+                    <form method="post" onsubmit="return validateSignUp()">
+                        <p> <label>Email<span>*</span></label> <input type="email" id="email" required name="email" placeholder="Email"> </p>
+                        <p> <label>Password<span>*</span></label> <input type="password" id="pass" required name="password" placeholder="Password"> </p>
+                        <p> <label>Confirm Password<span>*</span></label> <input  type="password" required id="cpass" placeholder="Confirm Password"> </p>
+                        <p> <input type="submit" value="Sign Up"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>function validateSignUp() {
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("pass").value;
+    var cpassword = document.getElementById("cpass").value;
+    if (password == "") {
+      alert("Password field must be filled out");
+      return false;
+    }
+    if (cpassword == "") {
+      alert("Confirm Password field must be filled out");
+      return false;
+    }
+    if (cpassword!==password) {
+      alert("Password Does not Match");
+      return false;
+    }
+    return true;
+  }</script>
+</html>
+</body>
+</html>
