@@ -60,7 +60,7 @@
 
     </head>
 
-    <body style="background-color: grey; align-items: center; margin-top:-30px;">
+    <body style="background-color: #823128; align-items: center; margin-top:-30px;">
         <div style="color: white; text-align:center;" id="wrapper">
             <h1 style="padding-top:150px; font-size: 44px; font-weight:700;">DECOMPRESS YOUR FILE</h1>
         <form action="/decompress" method="POST" enctype="multipart/form-data">
@@ -69,8 +69,9 @@
                 <input type="file" name="file" id="file" style="font-size:16px; width: 300px;;margin-left:40%; background:white; color:#a0a0a0;">
             </div>
             <button style="margin-top:30px;" class="bton" type="submit">Upload</button><br>
-            <label style="margin-top:20px; font-weight:lighter; font-size:16px;">Please wait after uploading so that your file gets decompressed.</label>
-
+            <label style="margin-top:20px;margin-bottom:20px; font-weight:lighter; font-size:16px;">Please wait after uploading so that your file gets decompressed.</label>
+            <br><a href="/home"><button class="bton" type="button"  >Go to Home</button></a>
+            <a href="/login"><button class="bton" type="button"  >Logout</button></a>
         </form>
 
         <p id="success" style="margin-top:50px;"></p><br>

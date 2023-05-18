@@ -203,7 +203,6 @@
         color: #ffffff;
         box-shadow: inset 250px 0 0 0 #2aa15f;
     }
-
     .flash-messages {
     width: 100%;
     list-style: none;
@@ -216,14 +215,12 @@
     justify-content: center;
 }
 
-
-    .flash-messages li {
-       
-        background-color: #ffcccc;
-        color: #ff0000;
-        padding: 10px;
-        margin-bottom: 10px;
-    }
+.flash-messages li {
+  background-color: #ffcccc;
+  color: #ff0000;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 </style>
 
 <body>
@@ -231,7 +228,7 @@
     {% if messages %}
     <ul class="flash-messages">
         {% for message in messages %}
-        <li>{{ message }}</li>
+        <li >{{ message }}</li>
         {% endfor %}
     </ul>
     {% endif %}
@@ -245,17 +242,17 @@
                     <h2>Welcome !<h3>to <strong>File Compression and Decompression</strong></h3>
                     </h2>
                     <br><br>
-                    <p>Create your account.<br>For Free!</p><a href="/registration" class="btn">Sign Up</a>
+                 
                 </div>
             </div>
             <div class="col-right">
                 <div class="login-form">
-                    <h2>Login</h2>
-                    <form method="post">
+                    <h2>Admin Login</h2>
+                    <form method="post" >
                         <p> <label>Email<span>*</span></label> <input id="uname" type="email" required name="email"
                                 placeholder=" Email"> </p>
-                        <p> <label>Password<span>*</span></label> <input id="pwd" required type="password"
-                                name="password" placeholder="Password"> </p>
+                        <p> <label>Password<span>*</span></label> <input id="pwd" required type="password" name="password"
+                                placeholder="Password"> </p>
                         <p><input type="submit" value="Sign in"></p>
                     </form>
                 </div>

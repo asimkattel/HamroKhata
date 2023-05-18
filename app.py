@@ -18,9 +18,18 @@ cursor = conn.cursor()
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS users (
         email TEXT PRIMARY KEY,
-        password TEXT
+        password TEXT,
+        role TEXT
     )
 ''')
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS admin (
+        email TEXT PRIMARY KEY,
+        password TEXT,
+        role TEXT
+    )
+''')
+
 
 
 cursor.close()
@@ -29,8 +38,24 @@ conn.close()
 
 @app.route("/", methods=["GET", "POST"])
 def welcome():
-    # validation vare
-    return redirect("/login")
+   if request.method == "GET":
+        conn = sqlite3.connect('user_database.db')
+        cursor = conn.cursor()
+
+        # Check if the admin already exists
+        cursor.execute('SELECT * FROM admin WHERE email = ?', ('asim@gmail.com',))
+        if cursor.fetchone():
+            # Admin already exists, no need to insert
+            cursor.close()
+            conn.close()
+        else:
+            # Admin doesn't exist, insert the new admin
+            cursor.execute('INSERT INTO admin (email, password) VALUES (?, ?)', ('asim@gmail.com', '123'))
+            conn.commit()
+            cursor.close()
+            conn.close()
+        return redirect("/login")
+
     
 
 
@@ -60,9 +85,34 @@ def registration():
         cursor.close()
         conn.close()
         return redirect("/login")  # Redirect to login page
+
+        
     
 
-    
+ 
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    if request.method == "GET":
+        return render_template("admin.html", check=0)
+    elif request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = sqlite3.connect('user_database.db')
+        cursor = conn.cursor()
+
+        cursor.execute('SELECT * FROM admin WHERE email = ? AND password = ?', (email, password))
+        if cursor.fetchone():
+            cursor.close()
+            conn.close()
+            return redirect("/adminhome")
+        else:
+            cursor.close()
+            conn.close()
+            flash("Invalid email or password.")
+            return redirect("/admin")
+
+   
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -86,7 +136,20 @@ def login():
             conn.close()
             flash("Invalid email or password.")
             return redirect("/login")
-
+        
+@app.route("/details", methods=["GET"])
+def details():
+    if request.method == "GET":
+        print("b")
+        conn = sqlite3.connect('user_database.db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM users')
+        users = cursor.fetchall()
+        print(users)
+        cursor.close()
+        conn.close()
+        return render_template("details.html", users = users)
+    
         
     
 
@@ -106,6 +169,21 @@ def home():
 app.config["FILE_UPLOADS"] = "./uploads"
 
 
+@app.route("/adminhome")
+def adminhome():
+
+    # Delete old files
+    filelist = glob.glob('uploads/*')
+    for f in filelist:
+        os.remove(f)
+    filelist = glob.glob('downloads/*')
+    for f in filelist:
+        os.remove(f)
+    return render_template("adminhome.html")
+
+app.config["FILE_UPLOADS"] = "./uploads"
+
+
 
 
 @app.route("/compress", methods=["GET", "POST"])
@@ -121,6 +199,10 @@ def compress():
             global filename
             global ftype
             filename = up_file.filename
+            if not filename.endswith(".txt"):
+                error_message = "Invalid file extension. Only '.txt' files are allowed."
+                return render_template("compress.html", check=-1, error=error_message)
+
             print(up_file.filename)
             up_file.save(os.path.join(app.config["FILE_UPLOADS"], filename))
             subprocess.call('c uploads\{}'.format(filename), shell=True)
@@ -147,6 +229,10 @@ def decompress():
             global filename
             global ftype
             filename = up_file.filename
+            if not filename.endswith(".txt"):
+                error_message = "Invalid file extension. Only '.txt' files are allowed."
+                return render_template("compress.html", check=-1, error=error_message)
+
             up_file.save(os.path.join(app.config["FILE_UPLOADS"], filename))
             subprocess.call('d.exe .\\uploads\{}'.format(filename), shell=True)
             filename=filename.split(".")[0]
