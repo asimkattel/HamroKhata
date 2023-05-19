@@ -18,15 +18,13 @@ cursor = conn.cursor()
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS users (
         email TEXT PRIMARY KEY,
-        password TEXT,
-        role TEXT
+        password TEXT
     )
 ''')
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS admin (
         email TEXT PRIMARY KEY,
-        password TEXT,
-        role TEXT
+        password TEXT
     )
 ''')
 
@@ -229,9 +227,9 @@ def decompress():
             global filename
             global ftype
             filename = up_file.filename
-            if not filename.endswith(".txt"):
-                error_message = "Invalid file extension. Only '.txt' files are allowed."
-                return render_template("compress.html", check=-1, error=error_message)
+            if not filename.endswith(".compress"):
+                error_message = "Invalid file extension. Only '.compress' files are allowed."
+                return render_template("decompress.html", check=-1, error=error_message)
 
             up_file.save(os.path.join(app.config["FILE_UPLOADS"], filename))
             subprocess.call('d.exe .\\uploads\{}'.format(filename), shell=True)

@@ -21,6 +21,7 @@
             height: 100%;
             margin: 0;
             font-family: 'Oswald', sans-serif;
+            background-color: #823128;
         }
 
         #wrapper {
@@ -39,6 +40,7 @@
             border: transparent;
             padding: 5px 15px;
             transition: transform 0.5s;
+            margin-top: 30px;
 
         }
 
@@ -50,7 +52,7 @@
             transform: translateY(-8px);
         }
 
-         .bton2 {
+        .bton2 {
             font-weight: 600;
             font-size: 16px;
             background: transparent;
@@ -58,32 +60,59 @@
             border: transparent;
             padding: 8px 25px;
             transition: transform 0.5s;
-        } 
+        }
 
         .bton2:hover {
-            color:white;
-            text-decoration:none;
+            color: white;
+            text-decoration: none;
             transform: translateY(-8px);
-        } 
+        }
+
+        div {
+            color: white;
+            text-align: center;
+
+        }
+
+        h1 {
+            padding-top: 100px;
+            font-size: 44px;
+            font-weight: 700;
+        }
+
+        label {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            font-weight: lighter;
+            font-size: 16px;
+        }
+
+        input {
+            font-size: 16px;
+            width: 300px;
+            height: 25px;
+            margin-left: 40%;
+            background-color: white;
+            color: #a0a0a0;
+        }
     </style>
 
 </head>
 
-<body style="background-color: #823128; align-items: center; margin-top:-30px;">
-    <div style="color: white; text-align:center;" id="wrapper">
-        <h1 style="padding-top:150px; font-size: 44px; font-weight:700;">COMPRESS YOUR FILE</h1>
+<body>
+    <div id="wrapper">
+        <h1>COMPRESS YOUR FILE</h1>
         <form action="/compress" method="POST" enctype="multipart/form-data">
-            <label style="margin-top:20px; margin-bottom:30px; font-weight:lighter; font-size:16px;">Select any
-                text-based file to compress it !</label>
-            <input type="file" name="file" id="file"
-                style="font-size:16px; width:300px; height:25px; margin-left:40%; background:white; color:#a0a0a0;">
-            <button style="margin-top:30px;" class="bton" type="submit">Upload</button><br>
-            <label style="margin-top:20px;margin-bottom:20px; font-weight:lighter; font-size:16px;">Please wait after uploading so that
-                your file gets compressed.</label><br>
-                <a href="/home"><button class="bton" type="button" >Go to Home</button></a>
-                <a href="/login"><button class="bton" type="button" >Logout</button></a>
+            <label>Select any text-based file to compress it !</label>
+            <input type="file" name="file" id="file">
+            <button  class="bton" type="submit">Upload</button><br>
+            <label style="margin-top:20px;margin-bottom:20px; font-weight:lighter; font-size:16px;">Please wait after
+                uploading so that your file gets compressed.</label>
+            </form>
+            <a href="/home"><button class="bton" type="button">Go to Home</button></a>
+            <a href="/login"><button class="bton" type="button">Logout</button></a>
 
-        </form>
+        
 
         <p id="success" style="margin-top:50px;"></p><br>
         <button class="bton2" id="dd" style="margin-top:20px;"><a id="download" href="/download"
