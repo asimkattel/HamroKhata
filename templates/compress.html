@@ -40,7 +40,7 @@
             border: transparent;
             padding: 5px 15px;
             transition: transform 0.5s;
-            margin-top: 30px;
+            margin-top: 20px;
 
         }
 
@@ -82,7 +82,7 @@
 
         label {
             margin-top: 20px;
-            margin-bottom: 30px;
+            /* margin-bottom: 30px; */
             font-weight: lighter;
             font-size: 16px;
         }
@@ -103,22 +103,22 @@
     <div id="wrapper">
         <h1>COMPRESS YOUR FILE</h1>
         <form action="/compress" method="POST" enctype="multipart/form-data">
-            <label>Select any text-based file to compress it !</label>
+            <label style="margin-bottom: 20px;">Select any text-based file to compress it !</label>
             <input type="file" name="file" id="file">
             <button  class="bton" type="submit">Upload</button><br>
-            <label style="margin-top:20px;margin-bottom:20px; font-weight:lighter; font-size:16px;">Please wait after
+            <label style="margin-top:20px; font-weight:lighter; font-size:16px;">Please wait after
                 uploading so that your file gets compressed.</label>
             </form>
             <a href="/home"><button class="bton" type="button">Go to Home</button></a>
-            <a href="/login"><button class="bton" type="button">Logout</button></a>
+            <a href="/logout"><button class="bton" >Logout</button></a>
 
         
 
-        <p id="success" style="margin-top:50px;"></p><br>
-        <button class="bton2" id="dd" style="margin-top:20px;"><a id="download" href="/download"
+        <p id="success" style="margin-top:20px;"></p><br>
+        <button class="bton2" id="dd" style="margin-top:10px;"><a id="download" href="/download"
                 style="text-decoration:none;color:black; "></a></button>
 
-        <div class="col-2" style="flex: 1;">
+        <div class="col-2" style="flex: 2;">
             <div style="margin: 5px 30px;" id="myalert" class="alert alert-success collapse">
                 <a id="linkClose" href="#" class="close" style="text-decoration:none;">&times;</a>
                 <p id="mytext"></p>
@@ -143,12 +143,13 @@
                 $('#myalert1').hide('fade');
             });
 
-            if ("{{check}}" == 1) {
-                mytext.innerHTML = "<strong> &#10003; </strong> File uploaded and compressed succesfully!";
-                $('#myalert').show('fade');
-                setTimeout(function () {
-                    $('#myalert').hide('fade');
-                }, 4000);
+            
+
+ if ("{{check}}" == 1) {
+                var osize = parseInt("{{ osize }}");
+                var csize = parseInt("{{ csize }}");
+                mytext.innerHTML = "<strong> &#10003; </strong> File uploaded and compressed succesfully! <br> Original File Size: "  + formatFileSize(osize)+ "<br>Compressed File Size: " + formatFileSize(csize)+ "<br> Compression Ratio: " + (((osize-csize)/osize)*100).toFixed(2) + "%";
+                $('#myalert').show();
                 success.innerHTML = "Download your compressed file";
                 dd.setAttribute("class", "bton");
                 download.innerHTML = "DOWNLOAD";
@@ -161,6 +162,19 @@
                 }, 4000);
             }
         });
+
+        function formatFileSize(fileSize) {
+            var units = ['B', 'KB', 'MB', 'GB', 'TB'];
+            var index = 0;
+
+            while (fileSize >= 1024 && index < units.length - 1) {
+                fileSize /= 1024;
+                index++;
+            }
+
+            return fileSize.toFixed(2) + ' ' + units[index];
+        }
+
 
     </script>
 </body>

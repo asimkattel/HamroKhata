@@ -1,0 +1,102 @@
+<!-- details.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Details</title>
+    <style>
+        body {
+            
+            
+            color: aliceblue;
+            background: #823128;;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            
+            border-collapse: collapse;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .bton {
+            
+            font-weight: 600;
+            font-size: 16px;
+            background: white;
+            color: black;
+            border: transparent;
+            padding: 10px 15px;
+            transition: transform 0.5s;
+
+        }
+       
+        .bton:hover {
+            font-weight: 600;
+            cursor: pointer;
+            background: grey;
+            color: white;
+            transform: translateY(-8px);
+        }
+
+        tr:hover {
+            background-color: #b93535;
+        }
+
+        h1{
+           text-align: center;
+           margin-top: 5%;
+        }
+    </style>
+</head>
+<body>
+    <h1 >File Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>File ID</th>
+                <th>File Name</th>
+                <th>Original Size</th>
+                <th>Compressed Size </th>
+                <th>Compressed Ratio </th>
+                <th>Username </th>
+
+                <!-- Add more columns here if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files %}
+            <tr>
+                <td>{{ file[0] }}</td>
+                <td>{{ file[1] }}</td>
+                <td>{{ file[2] }}</td>
+                <td>{{ file[3] }}</td>
+                <td>{{ file[4] }}</td>
+                <td>{{ file[5] }}</td>
+
+                <!-- Display more columns here if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="button-container">
+        <a href="/adminhome"><button class="bton" type="button">Go to Home</button></a>
+    </div>
+    <div class="button-container">
+        <a href="/logout"><button class="bton" >Logout</button></a>
+    </div>
+</body>
+</html>

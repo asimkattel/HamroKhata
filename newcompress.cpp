@@ -141,27 +141,28 @@ string encode_string(string ori)
     return str;
 }
 
-void pr(node *root)
-{
-    if (root == NULL)
-        return;
-    else if (!root->l && !root->r)
-    {
-        if (root->ch == '\n')
-            cout << "\\n";
-        else
-            cout << root->ch;
-        return;
-    }
-    pr(root->l);
-    pr(root->r);
-}
+// void pr(node *root)
+// {
+//     if (root == NULL)
+//         return;
+//     else if (!root->l && !root->r)
+//     {
+//         if (root->ch == '\n')
+//             cout << "\\n";
+//         else
+//             cout << root->ch;
+//         return;
+//     }
+//     pr(root->l);
+//     pr(root->r);
+// }
 
 int main(int argc, char *argv[])
 {
     string filename, tmp, original = "";
     fstream f;
     int i, j;
+    
     if (argc != 2)
         return 0;
     filename.assign(argv[1]);
@@ -173,6 +174,7 @@ int main(int argc, char *argv[])
     {
         original += cc;
     }
+
     cout << original.size() << endl;
     tmp = "";
     for (i = 0; i < filename.size(); i++)

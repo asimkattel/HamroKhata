@@ -71,12 +71,7 @@
             box-shadow: none;
         }
 
-        .login .col-left,
-        .login .col-right {
-            width: 100%;
-            margin: 0;
-            clip-path: none;
-        }
+        
 
         .login .col-right {
             padding: 30px;
@@ -217,21 +212,33 @@
 }
 
 
-    .flash-messages li {
+    .flash-messages li.success {
        
-        background-color: #ffcccc;
-        color: #ff0000;
+        background-color: #076433;
+    color: #e0eae1;
         padding: 10px;
         margin-bottom: 10px;
     }
+
+    .flash-messages li.error {
+       
+        background-color: #ffcccc;
+        color: #ff0000;
+       padding: 10px;
+       margin-bottom: 10px;
+   }
 </style>
 
 <body>
-    {% with messages = get_flashed_messages() %}
+   {% with messages = get_flashed_messages() %}
     {% if messages %}
     <ul class="flash-messages">
         {% for message in messages %}
-        <li>{{ message }}</li>
+        {% if "successful" in message %}
+        <li class="success">{{ message }}</li>
+        {% else %}
+        <li class="error">{{ message }}</li>
+        {% endif %}
         {% endfor %}
     </ul>
     {% endif %}
